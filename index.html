@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main id="container" class="bg-base-300 min-h-screen flex justify-center items-center">
+        <div id="main-content" class="bg-white p-15 rounded-xl shadow-md space-y-8">
+            <div class="flex flex-col justify-center items-center gap-5">
+                <div>
+                    <img src="./assets/github-logo.png" alt="Github Logo">
+                </div>
+                <div>
+                    <h2 class="text-center text-2xl font-bold">GitHub Issues Tracker</h2>
+                    <p class="text-center text-gray-400 font-semibold">Sign in to manage your issues</p>
+                </div>
+            </div>
+
+            <form class="space-y-1">
+                <label class="block text-[16px] font-medium" for="username">Username</label>
+                <input class="block w-full py-1 px-3 rounded-md" type="text" id="username" placeholder="Enter Username">
+                <p class="text-[14px] text-[#4A00FF]">Default: admin</p>
+
+                <label class="block text-[16px] font-medium" for="pass">Password</label>
+                <input class="block w-full py-1 px-3 rounded-md" type="password" id="pass" placeholder="Enter Password">
+                <p class="text-[14px] text-[#4A00FF]">Default: admin123</p>
+
+                <button id="sign-in" class="btn btn-primary w-full">Sign In</button>
+            </form>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
