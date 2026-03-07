@@ -26,7 +26,7 @@
     </header>
 
     <main class="bg-base-300 min-h-screen p-5">
-        <section id="all-tab" class="p-5 container mx-auto bg-white shadow-md">
+        <section id="all-tab" class="p-5 max-w-[350px] sm:max-w-[1140px] mx-auto bg-white shadow-md">
             <div class="flex justify-between ">
                 <div>
                     <button class="navBtn btn btn-primary">All</button>
@@ -36,14 +36,14 @@
             </div>    
         </section>
 
-        <section class="p-5 container mx-auto bg-white shadow-md mt-5">
+        <section class="p-5 max-w-[1140px] mx-auto bg-white shadow-md mt-5">
             <div class="flex justify-between">
                 <div class="flex items-center gap-3">
                     <div>
                         <img src="./assets/Aperture.png" alt="">
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold">50 Issues</h2>
+                        <h2 id="total-issue" class="text-2xl font-bold"></h2>
                         <p class="text-[14px] text-gray-400">Track and manage your project issues</p>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                 </div>
             </div>
         </section>
-        <hr class="container mx-auto text-gray-300">
-        <section id="all-card-container" class="container mx-auto bg-gray-50 p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <hr class="max-w-[1140px] mx-auto text-gray-300">
+        <section id="all-card-container" class="max-w-[1140px] mx-auto bg-gray-50 p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             <!-- all cards -->
              
            
