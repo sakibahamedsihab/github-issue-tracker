@@ -18,11 +18,11 @@ async function loadCard() {
             })
             navBtn.classList.add('btn-primary')
 
-            // const filter = arrayDB.filter((Db) => (Db.status === e.target.textContent))
-            console.log(e.target.textContent.toLowerCase())
-            arrayDB.forEach((db) => {
-                console.log(db.status.toLowerCase())
-            })
+            const filter = arrayDB.filter((Db) => (Db.status.toLowerCase() === e.target.textContent.toLowerCase()))
+            displayCard(filter)
+            if(e.target.textContent.toLowerCase() === 'all') {
+                displayCard(arrayDB)
+            }
         
         })
     })
