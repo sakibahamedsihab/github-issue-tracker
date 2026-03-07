@@ -7,6 +7,28 @@ function totalCount(num) {
     totalEl.textContent = `${num} Issues`
 }
 
+function getHtml(labels) {
+   const styles = {
+    'bug': 'bg-[#FECACA] text-[#EF4444]',
+    'enhancement': 'bg-[#BBF7D0] text-[#00A96E]'
+   }
+
+   const icons = {
+    'bug': './assets/BugDroid.png',
+    'enhancement': './assets/Sparkle.png'
+   }
+
+   return labels.map((label) => {
+    const style = styles[label.toLowerCase()] || 'bg-[#FDE68A] text-[#D97706]'
+    const icon = icons[label.toLowerCase()] || './assets/Vector.png'
+
+    return `<p class="flex items-center gap-2 ${style} py-1.5 px-3 rounded-full uppercase text-xs">
+                <img src="${icon}">
+                ${label}
+            </p>`
+   }).join('')
+}
+
 async function loadCard() {
     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues'
     const response = await fetch(url)
@@ -58,8 +80,7 @@ function displayCard(dataList) {
                     <h2 class="text-[14px] font-semibold">${data.title}</h2>
                     <p class="flex-1 text-xs text-[#64748B]">${data.description}</p>
                     <span class="flex items-center flex-wrap gap-2">
-                        <p class="bg-[#FEECEC] text-xs text-[#EF4444] py-1.5 px-3 rounded-full">${data.labels[0]}</p>
-                        <p class="bg-[#FDE68A] text-xs text-[#D97706] py-1.5 px-3 rounded-full">${data.labels[1]}</p>
+                        ${getHtml(data.labels)}
                     </span>
                 </div>
                 <hr class="text-gray-300">
@@ -109,5 +130,5 @@ function displayCard(dataList) {
 
 
 
-console.log(arrayDB)
+// console.log(arrayDB)
 loadCard()
