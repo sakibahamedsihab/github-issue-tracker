@@ -15,8 +15,8 @@ function totalCount(num) {
 
 function getHtmlForLabels(labels) {
    const styles = {
-    'bug': 'bg-[#FECACA] text-[#EF4444]',
-    'enhancement': 'bg-[#BBF7D0] text-[#00A96E]'
+    'bug': 'bg-[#FECACA] text-[#EF4444] border border-[#EF4444]',
+    'enhancement': 'bg-[#BBF7D0] text-[#00A96E] border border-[#00A96E]'
    }
 
    const icons = {
@@ -25,7 +25,7 @@ function getHtmlForLabels(labels) {
    }
 
    return labels.map((label) => {
-    const style = styles[label.toLowerCase()] || 'bg-[#FDE68A] text-[#D97706]'
+    const style = styles[label.toLowerCase()] || 'bg-[#FDE68A] text-[#D97706] border border-[#D97706]'
     const icon = icons[label.toLowerCase()] || './assets/Vector.png'
 
     return `<p class="flex items-center gap-2 ${style} py-1.5 px-3 rounded-full uppercase text-xs">
@@ -36,8 +36,8 @@ function getHtmlForLabels(labels) {
 }
 function getHtmlForStatus(status) {
     const styles = {
-        'open': 'bg-green-200 text-green-400',
-        'closed': 'bg-purple-200 text-purple-400'
+        'open': 'bg-green-200 text-green-400 border border-green-400',
+        'closed': 'bg-purple-200 text-purple-400 border border-purple-400'
     }
     const style = styles[status.toLowerCase()]
     return `<p class="${style} py-1 px-2 rounded-md text-xs w-fit">
@@ -162,18 +162,19 @@ function displayCard(dataList) {
         // update the priority
         if(data.priority === 'high') {
             const highEl = div.querySelector('#high')
-            highEl.classList.add('bg-[#FEECEC]', 'text-[#EF4444]')            
+            highEl.classList.add('bg-[#FEECEC]', 'text-[#EF4444]', 'border', 'border-[#EF4444]')            
         }
         else if(data.priority === 'medium') {
             const mediumEl = div.querySelector('#medium')
-            mediumEl.classList.add('bg-[#FFF6D1]', 'text-[#F59E0B]')
+            mediumEl.classList.add('bg-[#FFF6D1]', 'text-[#F59E0B]', 'border', 'border-[##F59E0B]')
         }
         else {
             const lowEl = div.querySelector('#low')
-            lowEl.classList.add('bg-[#EEEFF2]', 'text-[#9CA3AF]')
+            lowEl.classList.add('bg-[#EEEFF2]', 'text-[#9CA3AF]', 'border', 'border-[#9CA3AF]')
         }
 
 
+        div.classList.add('cursor-pointer')
         div.addEventListener('click', () => {
             modalContentEl.innerHTML = `
                 <h2 class="text-2xl font-bold">${data.title}</h2>
