@@ -1,13 +1,17 @@
 const allCardContainer = document.getElementById('all-card-container')
 const allNavBtn = document.querySelectorAll('.navBtn')
 const totalEl = document.querySelector('#total-issue')
+
+const issueModal  = document.getElementById('issue-modal')
+const modalContent = document.getElementById('modal-content')
+
 let arrayDB = []
 
 function totalCount(num) {
     totalEl.textContent = `${num} Issues`
 }
 
-function getHtml(labels) {
+function getHtmlForLabels(labels) {
    const styles = {
     'bug': 'bg-[#FECACA] text-[#EF4444]',
     'enhancement': 'bg-[#BBF7D0] text-[#00A96E]'
@@ -27,6 +31,33 @@ function getHtml(labels) {
                 ${label}
             </p>`
    }).join('')
+}
+function getHtmlForStatus(status) {
+    const styles = {
+        'open': 'bg-green-200 text-green-400',
+        'closed': 'bg-purple-200 text-purple-400'
+    }
+    const style = styles[status.toLowerCase()]
+    return `<p class="${style} py-1 px-2 rounded-md text-xs w-fit">
+               ${status}
+            </p>`
+
+
+}
+function getPriorityStyle(priority) {
+    const styels = {
+        'high': 'bg-[#EF4444] text-white',
+        'medium': 'bg-[#D97706] text-white'
+    }
+
+    return styels[priority.toLowerCase()] || 'bg-gray-300 text-gray-600'
+}
+
+function getAssignee(assignee) {
+    if(!assignee) {
+        return 'Not Found'
+    }
+    return assignee
 }
 
 async function loadCard() {
@@ -79,15 +110,16 @@ function displayCard(dataList) {
                 <div class="px-5 flex flex-col flex-1 gap-2">
                     <h2 class="text-[14px] font-semibold">${data.title}</h2>
                     <p class="flex-1 text-xs text-[#64748B]">${data.description}</p>
+                    ${getHtmlForStatus(data.status)}
                     <span class="flex items-center flex-wrap gap-2">
-                        ${getHtml(data.labels)}
+                        ${getHtmlForLabels(data.labels)}
                     </span>
                 </div>
                 <hr class="text-gray-300">
 
                 <div class="px-5 flex flex-col gap-2">
-                    <h2 class="text-xs text-gray-400">#1 by ${data.author}</h2>
-                    <h2 class="text-xs text-gray-400" >${data.updatedAt}</h2>
+                    <h2 class="text-xs text-gray-400">#${data.id} by ${data.author}</h2>
+                    <h2 class="text-xs text-gray-400" >${new Date(data.createdAt).toLocaleDateString()}</h2>
                 </div>
             </div>
         `
@@ -122,6 +154,41 @@ function displayCard(dataList) {
             const lowEl = div.querySelector('#low')
             lowEl.classList.add('bg-[#EEEFF2]', 'text-[#9CA3AF]')
         }
+
+
+        div.addEventListener('click', () => {
+            modalContent.innerHTML = `
+                <h2 class="text-2xl font-bold">${data.title}</h2>
+
+                            <div class="flex items-center gap-2">
+                                ${getHtmlForStatus(data.status)}
+                                <p class="text-xs text-gray-300">Opened by ${getAssignee(data.assignee)}</p>
+                                
+                                <p class="text-xs text-gray-300" >${new Date(data.createdAt).toLocaleDateString()}</p>
+                            </div>
+                            
+                            <span class="w-fit flex flex-0 gap-2">
+                            ${getHtmlForLabels(data.labels)}
+                            </span>
+
+                            <p class="flex-1 text-xs text-[#64748B]">${data.description}</p>
+
+                            <div class="flex items-center justify-around bg-sky-50 p-2 rounded-md">
+                                <span class="">
+                                    <p class="text-gray-500">Assingee:</p>
+                                    ${getAssignee(data.assignee)}
+                                </span>
+
+                                <span>
+                                    <p class="text-gray-500">Priority:</p>
+                                    <p class="text-xs py-1.5 px-4 rounded-full font-medium ${getPriorityStyle(data.priority)} capitalize">
+                                    ${data.priority} Priority
+                                    </p>
+                                </span>
+                            </div>
+            `
+            issueModal.showModal()
+        })
 
         allCardContainer.appendChild(div)
 
