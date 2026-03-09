@@ -2,8 +2,10 @@ const allCardContainer = document.getElementById('all-card-container')
 const allNavBtn = document.querySelectorAll('.navBtn')
 const totalEl = document.querySelector('#total-issue')
 
-const issueModal  = document.getElementById('issue-modal')
-const modalContent = document.getElementById('modal-content')
+const issueModalEl  = document.getElementById('issue-modal')
+const modalContentEl = document.getElementById('modal-content')
+
+const searchIssueEL = document.getElementById('search-issue')
 
 let arrayDB = []
 
@@ -157,7 +159,7 @@ function displayCard(dataList) {
 
 
         div.addEventListener('click', () => {
-            modalContent.innerHTML = `
+            modalContentEl.innerHTML = `
                 <h2 class="text-2xl font-bold">${data.title}</h2>
 
                             <div class="flex items-center gap-2">
@@ -187,7 +189,7 @@ function displayCard(dataList) {
                                 </span>
                             </div>
             `
-            issueModal.showModal()
+            issueModalEl.showModal()
         })
 
         allCardContainer.appendChild(div)
@@ -199,3 +201,17 @@ function displayCard(dataList) {
 
 // console.log(arrayDB)
 loadCard()
+
+searchIssueEL.addEventListener('input', (e) => {
+    // console.log(e.target.value)
+
+    const searchInput = e.target.value.toLowerCase().trim()
+    // console.log(searchInput)
+
+    const filtered = arrayDB.filter((db => {
+        return db.title.toLowerCase().includes(searchInput) || db.description.toLowerCase().includes(searchInput)
+    }))
+
+    displayCard(filtered)
+    totalCount(filtered.length)
+})
