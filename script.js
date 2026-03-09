@@ -46,6 +46,18 @@ function getHtmlForStatus(status) {
 
 
 }
+
+function manageSpinner(status) {
+    if(status) {
+        document.getElementById('spinner').classList.remove('hidden')
+        document.getElementById('all-card-container').classList.add('hidden')
+    }
+    else {
+        document.getElementById('all-card-container').classList.remove('hidden')
+        document.getElementById('spinner').classList.add('hidden')
+    }
+}
+
 function getPriorityStyle(priority) {
     const styels = {
         'high': 'bg-[#EF4444] text-white',
@@ -63,12 +75,14 @@ function getAssignee(assignee) {
 }
 
 async function loadCard() {
+    manageSpinner(true)
     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues'
     const response = await fetch(url)
     const data = await response.json()
     arrayDB = data.data
     // render card
     // console.log(arrayDB)
+    manageSpinner(false)
     displayCard(arrayDB)
     totalCount(arrayDB.length)
     // navbar active state and tab filter
@@ -76,13 +90,15 @@ async function loadCard() {
         navBtn.addEventListener('click', (e) => {
             allNavBtn.forEach((btn) => btn.classList.remove('btn-primary'))
             navBtn.classList.add('btn-primary')
-
+            
             const btnText = e.target.textContent.toLowerCase()
             if(btnText === 'all') {
+                
                 displayCard(arrayDB)
                 totalCount(arrayDB.length)
             }
             else {
+                // manageSpinner(true)
                 displayCard(arrayDB.filter((db) => db.status === btnText))
                 totalCount((arrayDB.filter((db) => db.status === btnText).length))
             }
@@ -199,19 +215,24 @@ function displayCard(dataList) {
 
 
 
+
 // console.log(arrayDB)
 loadCard()
 
 searchIssueEL.addEventListener('input', (e) => {
     // console.log(e.target.value)
-
+    manageSpinner(true)
     const searchInput = e.target.value.toLowerCase().trim()
     // console.log(searchInput)
 
-    const filtered = arrayDB.filter((db => {
-        return db.title.toLowerCase().includes(searchInput) || db.description.toLowerCase().includes(searchInput)
-    }))
+    setTimeout(() => {
+        const filtered = arrayDB.filter((db => {
+            return db.title.toLowerCase().includes(searchInput) || db.description.toLowerCase().includes(searchInput)
+        }))
 
-    displayCard(filtered)
-    totalCount(filtered.length)
+        displayCard(filtered)
+        totalCount(filtered.length)
+        manageSpinner(false)
+    },300)
+        
 })
